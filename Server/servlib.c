@@ -94,7 +94,6 @@ void writeToFile(char* filename, char* content){
 	FILE *fp = fopen(filename, "a+");
 	if (fp == NULL )perror("Error: \n");
 	write(fileno(fp), content, strlen(content));
-	//fputs(content, fp);
 	fclose(fp);
 }
 
@@ -202,7 +201,9 @@ char* getRemaind(char* str, int index) {
 char* getFinal(char* str, int index) {
     char* remainNumbers = (char*) calloc(255, sizeof(char));
     memcpy(remainNumbers, str + index + 1, strlen(str));
+    if(strlen(remainNumbers)==1)
     return remainNumbers;
+    else return reverse(remainNumbers);
 }
 
 // Rewrite file data
@@ -323,13 +324,13 @@ void signalHandler(int sig) {
 	switch(sig) {
 		case SIGINT:
 			show("Received SIGINT\n");
-			exit(0);
+			_exit(0);
 		case SIGQUIT:
 			show("Received SIGQUIT\n");
-			exit(0);
+			_exit(0);
 		case SIGTERM:
 			show("Received SIGTERM\n");
-			exit(0);
+			_exit(0);
 		case SIGUSR1:
 			show(workingTime());
 			show(CountHost());
